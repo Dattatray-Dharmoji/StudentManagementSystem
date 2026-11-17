@@ -4,7 +4,14 @@ A web application for managing students, courses, and course enrollments, with a
 
 ## Screenshot
 
-The project screenshot will be added here when provided.
+The project screenshot will be added here when provided<img width="1917" height="1198" alt="Screenshot 2026-11-17 115653" src="https://github.com/user-attachments/assets/7b60ef07-d1f5-41e9-9d3c-20bb5a62de86" />
+<img width="1917" height="1097" alt="Screenshot 2026-11-17 115924" src="https://github.com/user-attachments/assets/ccff609d-aea0-4e24-a67a-0c196f7b2eaa" />
+
+<img width="1895" height="1081" alt="Screenshot 2026-11-17 115910" src="https://github.com/user-attachments/assets/860d2b41-5c1d-4f04-99e4-37db6dc43fb5" />
+<img width="1906" height="1148" alt="Screenshot 2026-11-17 115855" src="https://github.com/user-attachments/assets/8b1fa74c-1722-46f7-af84-9c2abf9ed8f5" />
+<img width="1917" height="1088" alt="Screenshot 2026-11-17 115748" src="https://github.com/user-attachments/assets/9df42ac8-d086-485d-bc42-55f9b2cf58e5" />
+<img width="1917" height="1092" alt="Screenshot 2026-11-17 115739" src="https://github.com/user-attachments/assets/545f7102-8f01-424a-8177-ae4b011420be" />
+
 
 ## Features
 
