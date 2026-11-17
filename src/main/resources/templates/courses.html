@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar}"></div>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div th:replace="~{fragments/layout :: navbar}"></div>
+
+            <div class="container-fluid px-4 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Courses</h2>
+                    <a th:href="@{/course/new}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Add New
+                        Course</a>
+                </div>
+                <div th:if="${message}" class="alert alert-success text-center" role="alert" th:text="${message}"></div>
+
+
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <i class="bi bi-table me-1"></i> Course List
+                    </div>
+
+                    <div class="card-body">
+                        <div class="text-muted" th:if="${Courses.isEmpty()}">NO Course Found !
+
+
+                        </div>
+
+
+
+                        <div class="text-muted" th:if="${!Courses.isEmpty()}">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Course Name</th>
+										<th>Course Code</th>
+										<th>Couse Fees</th>
+                                        <th>Duration</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr th:each =" course : ${Courses.content}">
+                                        <td data-label="ID" th:text="${course.id}"></td>
+                                        <td data-label="Course Name" th:text="${course.courseName}"></td>
+										<td data-label="Couse Code" th:text="${course.courseCode}"></td>
+										<td data-label="Couse Fees" th:text="${course.fee}"></td>
+                                        <td data-label="Duration" th:text="${course.duration}"></td>
+                                        
+                                        <td data-label="Actions">
+                                            <a th:href="@{'/course/' + ${course.id}} "  class="btn btn-sm btn-info text-white me-1"
+                                                title="View"><i class="bi bi-eye"></i></a>
+                                            <a th:href="@{/course/{id}/edit(id=${course.id})}" class="btn btn-warning text-white"><i class="bi bi-pencil"></i></a>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Course pagination">
+                            <ul class="pagination justify-content-end">
+
+                                <!-- Previous -->
+                                <li class="page-item" th:classappend="${Courses.first} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/course/list(page=${Courses.number - 1}, size=${Courses.size})}">
+                                        Previous
+                                    </a>
+                                </li>
+
+                                <!-- Dynamic page numbers -->
+                                <li class="page-item"
+                                    th:each="i : ${#numbers.sequence(0, Courses.totalPages - 1)}"
+                                    th:classappend="${i == Courses.number} ? 'active'">
+
+                                    <a class="page-link"
+                                       th:href="@{/course/list(page=${i}, size=${Courses.size})}"
+                                       th:text="${i + 1}">
+                                    </a>
+                                </li>
+
+                                <!-- Next -->
+                                <li class="page-item" th:classappend="${Courses.last} ? 'disabled'">
+                                    <a class="page-link"
+                                       th:href="@{/course/list(page=${Courses.number + 1}, size=${Courses.size})}">
+                                        Next
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div th:replace="~{fragments/layout :: script}">
+   </div>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <div th:replace="~{fragments/layout :: navbar}"></div>
+
+        <div class="container-fluid px-4 py-4">
+
+            <!-- Page Header -->
+            <div class="bg-primary text-white rounded-3 p-4 mb-4">
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+
+                    <div>
+                        <h2 class="mb-1">Students Enrolled in Courses</h2>
+                        <p class="mb-0 opacity-75">
+                            Track enrollment coverage, fees, and quick access to details.
+                        </p>
+                    </div>
+
+                    <a th:href="@{/enrollments/showEnroll}"
+                       class="btn btn-light text-primary fw-semibold">
+                        <i class="bi bi-plus-lg me-1"></i> Enroll Student
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Enrolled Students Table -->
+            <div class="card mb-4">
+
+                <div class="card-header bg-white">
+                    <i class="bi bi-table me-1"></i> Enrolled Students
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-striped align-middle">
+
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Courses Count</th>
+                                <th>Total Fee</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <!-- Dynamic Student Records -->
+                            <tr th:each="enrollment, iterStat : ${students.content}">
+
+                                <td th:text="${students.number * students.size + iterStat.count}">
+                                    1
+                                </td>
+
+                                <td th:text="${enrollment.studentName}">
+                                    Jane Doe
+                                </td>
+
+                                <td th:text="${enrollment.studentEmail}">
+                                    jane@example.com
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-primary"
+                                          th:text="${enrollment.courseCount}">
+                                        3
+                                    </span>
+                                </td>
+
+                                <td th:text="${'₹' + #numbers.formatDecimal(enrollment.totalFee != null ? enrollment.totalFee : 0, 1, 2)}">
+                                    ₹2,400.00
+                                </td>
+
+                                <td>
+                                    <a th:href="@{/enrollments/getStudentEnrollmentDetails/{id}(id=${enrollment.studentId})}"
+                                       class="btn btn-sm btn-info text-white"
+                                       title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            <!-- Empty Records Message -->
+                            <tr th:if="${students.empty}">
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    No enrolled students found.
+                                </td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+
+                        <div class="text-muted">
+                            Total Students:
+                            <strong th:text="${students.totalElements}">0</strong>
+                            |
+                            Page
+                            <strong th:text="${students.totalPages == 0 ? 0 : students.number + 1}">1</strong>
+                            of
+                            <strong th:text="${students.totalPages}">1</strong>
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <!-- Previous Button -->
+                            <a th:if="${students.hasPrevious()}"
+                               th:href="@{/enrollments/enrollmentList(page=${students.number - 1}, size=${students.size})}"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-chevron-left"></i> Previous
+                            </a>
+
+                            <button th:unless="${students.hasPrevious()}"
+                                    class="btn btn-outline-secondary btn-sm"
+                                    disabled>
+                                <i class="bi bi-chevron-left"></i> Previous
+                            </button>
+
+                            <!-- Next Button -->
+                            <a th:if="${students.hasNext()}"
+                               th:href="@{/enrollments/enrollmentList(page=${students.number + 1}, size=${students.size})}"
+                               class="btn btn-outline-primary btn-sm">
+                                Next <i class="bi bi-chevron-right"></i>
+                            </a>
+
+                            <button th:unless="${students.hasNext()}"
+                                    class="btn btn-outline-secondary btn-sm"
+                                    disabled>
+                                Next <i class="bi bi-chevron-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', event => {
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
